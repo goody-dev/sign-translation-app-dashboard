@@ -1,5 +1,5 @@
 import React, { useState } from 'react'
-import Thumbnail from "../assets/icons/nigeria-icon.svg"
+import Thumbnail from "../assets/illustrations/video-illustration.png"
 import ArrowIcon from '../assets/icons/filled-arrow-right.png'
 
 const TextAnalytics = () => {
@@ -15,6 +15,19 @@ const TextAnalytics = () => {
     {
       thumbnail: "#",
       rating: 87,
+    },
+    {
+      thumbnail: "#",
+      rating: 79,
+    },
+    ,
+    {
+      thumbnail: "#",
+      rating: 79,
+    },
+    {
+      thumbnail: "#",
+      rating: 79,
     },
     {
       thumbnail: "#",

@@ -102,7 +102,7 @@ const SignIn = () => {
           setMessage(res.data.message);
           handleToken(res.data.data.token);
           //alert(res.data.message);
-          navigate("/user/translate-text");
+          navigate("/");
         } else {
           setStatus("failed");
           setMessage(res.data.message);
