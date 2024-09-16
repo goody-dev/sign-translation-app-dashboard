@@ -101,7 +101,7 @@ const SignUp = () => {
       "fullname": fullname,
       "email": email,
       "password": password,
-      "role": "USER"
+      "role": "ADMIN"
     }
     const validity = validateEntry();
     if(validity === 1) {
@@ -126,7 +126,8 @@ const SignUp = () => {
       .catch(err => {
         console.log(err);
         setStatus("failed");
-        setMessage(err.response.data.message);
+        //setMessage(err.response.data.message);
+        setMessage("Something went wrong, pls try again");
         //alert("Something went wrong, pls try again");
       })
     }
