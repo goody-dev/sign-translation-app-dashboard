@@ -126,9 +126,13 @@ const SignUp = () => {
       .catch(err => {
         console.log(err);
         setStatus("failed");
-        //setMessage(err.response.data.message);
-        setMessage("Something went wrong, pls try again");
-        //alert("Something went wrong, pls try again");
+        if(err.response.data.message) {
+          setMessage(err.response.data.message);
+        } else if (err.message === "Network Error") {
+          setMessage(err.message);
+        } else {
+          setMessage("Something went wrong, pls try again");
+        }
       })
     }
   }

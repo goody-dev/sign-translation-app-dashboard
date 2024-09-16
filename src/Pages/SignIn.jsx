@@ -111,9 +111,13 @@ const SignIn = () => {
       .catch(err => {
         setStatus("failed");
         console.log(err);
-        //setMessage(err.response.data.message);
-        setMessage("Something went wrong, pls try again.");
-        //alert("Something went wrong, pls try again");
+        if(err.response.data.message) {
+          setMessage(err.response.data.message);
+        } else if (err.message === "Network Error") {
+          setMessage(err.message);
+        } else {
+          setMessage("Something went wrong, pls try again");
+        }
       })
     }
   }
