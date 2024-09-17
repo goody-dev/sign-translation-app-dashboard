@@ -1,11 +1,44 @@
-import React from 'react'
+import axios from 'axios'
+import React, { useEffect, useState } from 'react'
 import TransIcon from '../assets/icons/trans-vector.svg'
 import Thumbnail from '../assets/illustrations/video-illustration.png'
 import AreaChartCard from '../Components/AreaChartCard'
 import BarChartCard from '../Components/BarChartCard'
+import { useAuth } from '../provider/authProvider'
 
 
 const Report = () => {
+  const { token } = useAuth();
+  let config = {
+    headers: {
+      'authorization': `Bearer ${token}`
+    }
+  }
+
+  const [signVideos, setSignVideos] = useState([]);
+  const fetchVideos = async()=> {
+
+    await axios.get('https://signs-5n09.onrender.com/video/all', config)
+    .then(res => {
+      console.log(res.data.data);
+      setSignVideos(res.data.data);
+    }).catch(err => console.log(err));
+  }
+
+  const [signTexts, setSignTexts] = useState([]);
+  const fetchTexts = async()=> {
+    await axios.get('https://signs-5n09.onrender.com/text/all', config)
+    .then(res => {
+      console.log(res.data.data);
+      setSignTexts(res.data.data);
+    }).catch(err => console.log(err));
+  }
+
+  useEffect(()=> {
+    fetchTexts();
+    fetchVideos();
+  }, [token])
+
   const activityData = [
     {month: "JAN", users: 58},
     {month: "FEB", users: 69},
@@ -16,7 +49,7 @@ const Report = () => {
     {month: "JUl", users: 168},
     {month: "AUG", users: 79},
     {month: "SEP", users: 80},
-    {month: "OCt", users: 29},
+    {month: "OCT", users: 29},
     {month: "NOV", users: 148},
     {month: "DEC", users: 90}
 
@@ -98,11 +131,11 @@ const Report = () => {
               <div className="flex flex-col justify-between gap-[1rem] w-[70%] max-h-[152px]">
                 <div className="flex flex-col justify-between bg-[var(--white-background)] w-[100%] shadow-md  p-[var(--tile-padding)] rounded-[1rem] border-[#EFF0F6] border-[1px] border-solid">
                     <p className='text-[14px]/4 text-[var(--subtext-color)] font-[500]'>Total Video Contributions</p>
-                    <p className='font-bold text-[1.5rem]/7'>3,298</p>
+                    <p className='font-bold text-[1.5rem]/7'>{signVideos[0]? signVideos.length: <span className='text-[1rem] text-[var(--xsubtext-color)]'>...</span>}</p>
                 </div>
                 <div className="flex flex-col justify-between bg-[var(--white-background)] w-[100%] shadow-md  p-[var(--tile-padding)] rounded-[1rem] border-[#EFF0F6] border-[1px] border-solid">
                     <p className='text-[14px]/4 text-[var(--subtext-color)] font-[500]'>Total Text Contributions</p>
-                    <p className='font-bold text-[1.5rem]/7'>3,298</p>
+                    <p className='font-bold text-[1.5rem]/7'>{signTexts[0]? signTexts.length: <span className='text-[1rem] text-[var(--xsubtext-color)]'>...</span>}</p>
                 </div>
               </div>
             </div>
