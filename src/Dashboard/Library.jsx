@@ -2,22 +2,32 @@ import axios from 'axios';
 import React, { useState } from 'react'
 import { useEffect } from 'react';
 import '../App.css'
+import ProcessingLoader from '../Components/ProcessingLoader';
+import { useAuth } from "../provider/authProvider"
 
 const Library = () => {
+  const { token } = useAuth();
+  let config = {
+    headers: {
+      'authorization': `Bearer ${token}`
+    }
+  }
+
   const [signVideos, setSignVideos] = useState([]);
   const fetchVideos = async()=> {
-    await axios.get('https://signs-5n09.onrender.com/video/all')
+
+    await axios.get('https://signs-5n09.onrender.com/video/all', config)
     .then(res => {
-      //console.log(res.data);
+      console.log(res.data.data);
       setSignVideos(res.data.data);
     }).catch(err => console.log(err));
   }
 
   const [signTexts, setSignTexts] = useState([]);
   const fetchTexts = async()=> {
-    await axios.get('https://signs-5n09.onrender.com/text/all')
+    await axios.get('https://signs-5n09.onrender.com/text/all', config)
     .then(res => {
-      //console.log(res.data);
+      console.log(res.data.data);
       setSignTexts(res.data.data);
     }).catch(err => console.log(err));
   }
@@ -25,7 +35,7 @@ const Library = () => {
   useEffect(()=> {
     fetchTexts();
     fetchVideos();
-  }, [])
+  }, [token])
 
   const videoToTextTranslations = [
     {
@@ -99,22 +109,22 @@ const Library = () => {
               <div className='flex flex-row justify-between bg-[var(--faint-blue-background)] p-[var(--button-padding)] rounded-[0.5rem] text-[var(--xsubtext-color)] font-[500]'>
                 <p className='w-[25%]'>video ID</p>     
                 <p className='w-[25%]'>Translations</p>     
-                <p  className='w-[25%] text-center'>Contributions</p>     
+                <p className='w-[25%] text-center'>Contributions</p>     
                 <p className='w-[25%] text-right'>Top Rating</p>
               </div>
               <div className='flex flex-col gap-[calc(var(--custom-gap)/2)]'>
-                {
-                  videoToTextTranslations.map((translation, idx) => 
+                { signVideos[0]?
+                  signVideos.map((translation, idx) => 
                   <>
                     <div key={idx} className='flex flex-row justify-between'>
-                      <p className='w-[25%] text-[var(--secondary-color)] cursor-pointer'>{translation.link}</p>
-                      <p className='w-[25%]'>{`${translation.translations} translations`}</p>
-                      <p className='w-[25%] text-center'>{`${translation.contributions} contributions`}</p>
-                      <p className='w-[25%] text-center'>{`${translation.topRating}%`}</p>
+                      <p className='w-[25%] text-[var(--secondary-color)] cursor-pointer'>{translation.id}</p>
+                      <p className='w-[25%]'>{translation.texts? `${translation.texts.length} translations` : "0 Translation"}</p>
+                      <p className='w-[25%] text-center'>{translation.texts? `${translation.texts.length} Contributions` : "0 Contibutions"}</p>
+                      <p className='w-[25%] text-center'>{translation.texts.reduce((text)=> text.rating > text.rating).rating}</p>
                     </div>
                     <hr></hr>
                   </>)
-                }
+                  : "Loading Translations..."}
               </div>
             </div>
         </div>
@@ -133,18 +143,18 @@ const Library = () => {
                 <p className='w-[25%] text-right'>Top Rating</p>
               </div>
               <div className='flex flex-col gap-[calc(var(--custom-gap)/2)]'>
-                {
-                  textToVideoTranslations.map((translation, idx) => 
+                { signTexts[0]?
+                  signTexts.map((translation, idx) => 
                   <>
                     <div key={idx} className='flex flex-row justify-between'>
-                      <p className='w-[25%] text-[var(--secondary-color)] cursor-pointer'>{translation.link}</p>
-                      <p className='w-[25%]'>{`${translation.translations} translations`}</p>
-                      <p className='w-[25%] text-center'>{`${translation.contributions} contributions`}</p>
-                      <p className='w-[25%] text-center'>{`${translation.topRating} %`}</p>
+                      <p className='w-[25%] text-[var(--secondary-color)] cursor-pointer'>{translation.id}</p>
+                      <p className='w-[25%]'>{translation.videoUrls? `${translation.videoUrls.length} translations`: "0 translations"}</p>
+                      <p className='w-[25%] text-center'>{translation.videoUrls? `${translation.videoUrls.length} Contributions`: "0 Contribution"}</p>
+                      <p className='w-[25%] text-center'>{translation.videoUrls.length? translation.videoUrls.reduce((text)=> text.rating > text.rating).rating :"Null"}</p>
                     </div>
                     <hr></hr>
                   </>)
-                }
+                : "Loading Translations..." }
               </div>
             </div>
         </div>

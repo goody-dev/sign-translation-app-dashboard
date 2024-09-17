@@ -102,9 +102,10 @@ const SignIn = () => {
           setMessage(res.data.message);
           handleToken(res.data.data.token);
           //alert(res.data.message);
-          navigate("/");
+          setTimeout(navigate("/"), 5000);
         } else {
           setStatus("failed");
+          //alert("failed");
           setMessage(res.data.message);
         }
       })
