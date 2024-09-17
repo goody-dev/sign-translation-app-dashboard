@@ -38,6 +38,10 @@ const routesForAuthenticatedUsers = [
                 element: <TextAnalytics />,
                 path: "/text-analytics"
             },
+            {
+                element: <TextAnalytics />,
+                path: "/text-analytics/:id"
+            },
         ]
     }
 ]

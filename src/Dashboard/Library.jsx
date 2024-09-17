@@ -1,5 +1,5 @@
 import axios from 'axios';
-import React, { useState } from 'react'
+import React, { useRef, useState } from 'react'
 import { useEffect } from 'react';
 import '../App.css'
 import ProcessingLoader from '../Components/ProcessingLoader';
@@ -13,7 +13,31 @@ const Library = () => {
     }
   }
 
+  const [videoOrder, setVideoOrder] = useState("");
+  const [textOrder, setTextOrder] = useState("");
+
+  const handleTextOrderSelect = (event) => {
+    setTextOrder(event.target.value);
+  }
+
+  const handleVideoOrderSelect = (event) => {
+    setVideoOrder(event.target.value);
+  }
+
+
   const [signVideos, setSignVideos] = useState([]);
+  let videos;
+
+  useEffect(()=> {
+    if(videoOrder === "recent"){
+      videos = signVideos.sort((video, next) => next.id - video.id);
+      setSignVideos(videos);
+    } else {
+      videos = signVideos.sort((video, next) => video.id - next.id);
+      setSignVideos(videos);
+    }
+  }, [videoOrder, signVideos]);
+
   const fetchVideos = async()=> {
 
     await axios.get('https://signs-5n09.onrender.com/video/all', config)
@@ -24,6 +48,18 @@ const Library = () => {
   }
 
   const [signTexts, setSignTexts] = useState([]);
+  let texts;
+
+  useEffect(()=> {
+    if(textOrder === "recent"){
+      texts = signTexts.sort((video, next) => next.id - video.id);
+      setSignTexts(texts);
+    } else {
+      texts = signTexts.sort((video, next) => video.id - next.id);
+      setSignTexts(texts);
+    }
+  }, [textOrder, signTexts]);
+
   const fetchTexts = async()=> {
     await axios.get('https://signs-5n09.onrender.com/text/all', config)
     .then(res => {
@@ -37,71 +73,13 @@ const Library = () => {
     fetchVideos();
   }, [token])
 
-  const videoToTextTranslations = [
-    {
-      link: "sign1.translate.io",
-      translations: 5,
-      contributions: 135,
-      topRating: 86,
-    },
-    {
-      link: "sign1.translate.io",
-      translations: 5,
-      contributions: 135,
-      topRating: 86,
-    },
-    {
-      link: "sign1.translate.io",
-      translations: 5,
-      contributions: 135,
-      topRating: 86,
-    },
-    {
-      link: "sign1.translate.io",
-      translations: 5,
-      contributions: 135,
-      topRating: 86,
-    }
-  ]
-
-  const textToVideoTranslations = [
-    {
-      link: "sign1.translate.io",
-      translations: 5,
-      contributions: 35,
-      topRating: 88,
-    },
-    {
-      link: "sign1.translate.io",
-      translations: 5,
-      contributions: 13,
-      topRating: 86,
-    },
-    {
-      link: "sign1.translate.io",
-      translations: 5,
-      contributions: 135,
-      topRating: 84,
-    },
-    {
-      link: "sign1.translate.io",
-      translations: 5,
-      contributions: 115,
-      topRating: 89,
-    },
-    {
-      link: "sign1.translate.io",
-      translations: 5,
-      contributions: 15,
-      topRating: 89,
-    }
-  ]
 
   return (
     <div className='flex flex-row w-[85%] h-[100%] gap-[2rem]'>
       <div className='flex flex-col w-[calc(50%-1rem)] gap-[1rem]'>
-        <select className='p-[var(--button-padding)] rounded-[1.25rem] w-[20rem] text-[1rem] text-[var(--subtext-color)] font-[500]'>
-            <option>Sort by: Most Recent</option>
+        <select onChange={handleVideoOrderSelect} value={videoOrder} disabled={signVideos[0]? false: true} name='videos' id='video-order-select' className='p-[var(--button-padding)] rounded-[1.25rem] w-[20rem] text-[1rem] text-[var(--subtext-color)] font-[500]'>
+          <option value="recent">Sort by: Most Recent</option> 
+          <option value="early">Sort by: Most Early</option>
         </select>
         <div className='flex flex-col bg-[var(--white-background)] p-[var(--card-padding)] rounded-[1rem] gap-[var(--custom-gap)]'>
             <h2 className='text-[var(--subtext-color)] font-[500]'>Video to Text Translations</h2>
@@ -130,8 +108,9 @@ const Library = () => {
         </div>
       </div>
       <div className='flex flex-col w-[calc(50%-1rem)] gap-[1rem]'>
-        <select className='p-[var(--button-padding)] rounded-[1.25rem] w-[20rem] text-[1rem] text-[var(--subtext-color)] font-[500]'>
-            <option>Sort by: Most Recent</option>
+        <select onChange={handleTextOrderSelect} value={textOrder} disabled={signTexts[0]? false: true} name="texts" id="texts-order-select" className='p-[var(--button-padding)] rounded-[1.25rem] w-[20rem] text-[1rem] text-[var(--subtext-color)] font-[500]'>
+            <option value="recent">Sort by: Most Recent</option>
+            <option value="early">Sort by: Most Early</option>
         </select>
         <div className='flex flex-col bg-[var(--white-background)] p-[var(--card-padding)] rounded-[1rem] gap-[var(--custom-gap)]'>
             <h2 className='text-[var(--subtext-color)] font-[500]'>Text to Video Translations</h2>
@@ -146,12 +125,14 @@ const Library = () => {
                 { signTexts[0]?
                   signTexts.map((translation, idx) => 
                   <>
-                    <div key={idx} className='flex flex-row justify-between'>
-                      <p className='w-[25%] text-[var(--secondary-color)] cursor-pointer'>{translation.id}</p>
-                      <p className='w-[25%]'>{translation.videoUrls? `${translation.videoUrls.length} translations`: "0 translations"}</p>
-                      <p className='w-[25%] text-center'>{translation.videoUrls? `${translation.videoUrls.length} Contributions`: "0 Contribution"}</p>
-                      <p className='w-[25%] text-center'>{translation.videoUrls.length? translation.videoUrls.reduce((top, video)=> video.rating > top.rating? video: top).rating :"Null"}</p>
-                    </div>
+                    <a key={idx} href={`/text-analytics/${translation.id}`}>
+                      <div className='flex flex-row justify-between'>
+                        <p className='w-[25%] text-[var(--secondary-color)] cursor-pointer'>{translation.id}</p>
+                        <p className='w-[25%]'>{translation.videoUrls? `${translation.videoUrls.length} translations`: "0 translations"}</p>
+                        <p className='w-[25%] text-center'>{translation.videoUrls? `${translation.videoUrls.length} Contributions`: "0 Contribution"}</p>
+                        <p className='w-[25%] text-center'>{translation.videoUrls.length? translation.videoUrls.reduce((top, video)=> video.rating > top.rating? video: top).rating :"Null"}</p>
+                      </div>
+                    </a>
                     <hr></hr>
                   </>)
                 : "Loading Translations..." }

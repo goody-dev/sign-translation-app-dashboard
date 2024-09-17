@@ -1,5 +1,6 @@
 import axios from 'axios'
 import React, { useEffect, useState } from 'react'
+import { useRef } from 'react'
 import TransIcon from '../assets/icons/trans-vector.svg'
 import Thumbnail from '../assets/illustrations/video-illustration.png'
 import AreaChartCard from '../Components/AreaChartCard'
@@ -13,6 +14,12 @@ const Report = () => {
     headers: {
       'authorization': `Bearer ${token}`
     }
+  }
+
+  const [timeframe, setTimeframe] = useState("");
+
+  const handleFrameChange = (event) => {
+    setTimeframe(event.target.value);
   }
 
   const [signVideos, setSignVideos] = useState([]);
@@ -117,8 +124,11 @@ const Report = () => {
   return (
     <div className="flex flex-col gap-[var(--custom-gap)] h-[100%] w-[85%]">
       <div id="filter">
-        <select className='p-[var(--button-padding)] rounded-[1.25rem] w-[20rem] text-[1rem] text-[var(--subtext-color)] font-normal border-[#EFF0F6] border-[1px] border-solid shadow-md '>
-          <option className=''>Timeframe: <span className='font-semibold text-black'>All-time</span></option>
+        <select name="timeframe" value={timeframe} id="timeframe-select" className='p-[var(--button-padding)] rounded-[1.25rem] w-[20rem] text-[1rem] text-[var(--subtext-color)] font-normal border-[#EFF0F6] border-[1px] border-solid shadow-md '>
+          <option className='' value="all-time">Timeframe: <span className='font-semibold text-black'>All-time</span></option>
+          <option className='' value="weekly">Timeframe: <span className='font-semibold text-black'>Last One Week</span></option>
+          <option className='' value="monthly">Timeframe: <span className='font-semibold text-black'>Last One Month</span></option>
+          <option className='' value="yearly">Timeframe: <span className='font-semibold text-black'>Last One Year</span></option>
         </select>
       </div>
       <div className="flex flex-row flex-wrap w-[100%] gap-[1.5rem]">

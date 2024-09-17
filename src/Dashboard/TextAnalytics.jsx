@@ -3,10 +3,37 @@ import ArrowIcon from '../assets/icons/filled-arrow-right.png'
 
 import SearchBar from '../Components/SearchBar'
 import Gallery from '../Components/Gallery'
+import { useParams } from 'react-router-dom'
+import { useAuth } from '../provider/authProvider'
+import { useEffect } from 'react'
+import axios from 'axios'
 
 const TextAnalytics = () =>  {
-  const [selectedText, setSelectedText] = useState("");
-  const [selectedTextId, setSelectedTextId] = useState("");
+  const { token } = useAuth();
+  let config = {
+    headers: {
+      'authorization': `Bearer ${token}`
+    }
+  }
+
+  const params = useParams();
+
+  const [selectedTextTranslation, setSelectedTextTranslation] = useState("");
+  const [selectedText, setSelectedText] = useState(selectedTextTranslation.text);
+  const [selectedTextId, setSelectedTextId] = useState(params.id);
+
+
+  const fetchTextTranslation = async()=> {
+    await axios.get(`https://signs-5n09.onrender.com/text/${selectedTextId}`, config)
+    .then(res => {
+      console.log(res.data.data[0]);
+      setSelectedTextTranslation(res.data.data[0]);
+    }).catch(err => console.log(err));
+  }
+
+  useEffect(()=>{
+    fetchTextTranslation();
+  }, [])
 
   const textSVideos = [
     {
@@ -47,10 +74,10 @@ const TextAnalytics = () =>  {
         <SearchBar />
       </div>
       <div className='grid grid-cols-2 gap-[var(--custom-gap)] items-center '>
-        <div className='col-span-1 flex flex-col items-center justify-center p-[var(--button-padding)] bg-[var(--white-background)] h-[50vh] w-[100%] sm:w-[100%]'>
-            <p className='text-center text-[20px] font-semibold text-wrap'>{selectedText.length? selectedText: "Search a text..."}</p>
+        <div className='col-span-1 flex flex-col items-center justify-center p-[var(--button-padding)] bg-[var(--white-background)] h-[50vh] w-[100%] min-w-[41.5vw] sm:w-[100%]'>
+            <p className='text-center text-[20px] font-semibold text-wrap'>{selectedTextTranslation.text? selectedTextTranslation.text: "Loading..."}</p>
         </div>
-        <Gallery selectedTextId={selectedTextId} />
+        <Gallery selectedTextId={selectedTextId} translations={selectedTextTranslation.videoUrls && selectedTextTranslation.videoUrls}/>
       </div>
       <div className='flex flex-row w-[100%] justify-between'>
         <button className={'bg-[var(--blue-background)] p-[var(--button-padding)] rounded-[0.5rem] text-[var(--tertiary-color)] font-semibold shadow-[var(--button-shadow)] gap-[var(--inline-gap)] sm:p-[var(--button-padding)] opacity-[0.3]'}><img className='rotate-180 h-[var(vh-icon)]' src={ArrowIcon}/>Previous</button>
