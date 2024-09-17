@@ -21,6 +21,11 @@ const Report = () => {
     {month: "DEC", users: 90}
 
   ]
+
+  const fetchActivityData = () => {
+
+  }
+
   const ttrData = [
     {
       day: "",
@@ -63,6 +68,18 @@ const Report = () => {
       rating: "64",
     },
   ]
+
+  const fetchTopTextRating = () => {
+
+  }
+
+  const fetchTopVideoRating = () => {
+
+  }
+
+  const fetchPercentContributions = () => {
+    
+  }
 
   return (
     <div className="flex flex-col gap-[var(--custom-gap)] h-[100%] w-[85%]">

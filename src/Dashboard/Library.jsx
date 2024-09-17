@@ -1,7 +1,32 @@
-import React from 'react'
+import axios from 'axios';
+import React, { useState } from 'react'
+import { useEffect } from 'react';
 import '../App.css'
 
 const Library = () => {
+  const [signVideos, setSignVideos] = useState([]);
+  const fetchVideos = async()=> {
+    await axios.get('https://signs-5n09.onrender.com/video/all')
+    .then(res => {
+      //console.log(res.data);
+      setSignVideos(res.data.data);
+    }).catch(err => console.log(err));
+  }
+
+  const [signTexts, setSignTexts] = useState([]);
+  const fetchTexts = async()=> {
+    await axios.get('https://signs-5n09.onrender.com/text/all')
+    .then(res => {
+      //console.log(res.data);
+      setSignTexts(res.data.data);
+    }).catch(err => console.log(err));
+  }
+
+  useEffect(()=> {
+    fetchTexts();
+    fetchVideos();
+  }, [])
+
   const videoToTextTranslations = [
     {
       link: "sign1.translate.io",
