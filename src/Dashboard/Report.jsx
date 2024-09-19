@@ -63,8 +63,8 @@ const Report = () => {
 
   ]
 
-  const topTextRating = signTexts[0]? signTexts.reduce((text, next) => text.rating < next.rating? next.rating: text.rating) : <span className='text-[1rem] text-[var(--xsubtext-color)]'>...</span> || "Null";
-  const topVideoRating = signVideos[0]? signVideos.reduce((video, next) => video.rating < next.rating? next.rating: video.rating): <span className='text-[1rem] text-[var(--xsubtext-color)]'>...</span> || "Null";
+  const topTextRating = signTexts[0]? signTexts.reduce((text, next) => text.rating? (text.rating < next.rating? next.rating: text.rating) : <span className='text-[1rem] text-[var(--xsubtext-color)]'>...</span>): "Null";
+  const topVideoRating = signVideos[0]? signVideos.reduce((video, next) => video.rating? (video.rating < next.rating? next.rating: video.rating): <span className='text-[1rem] text-[var(--xsubtext-color)]'>...</span>): "Null";
   const fetchActivityData = () => {
 
   }
