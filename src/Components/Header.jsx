@@ -94,9 +94,6 @@ const Header = () => {
             <li>
               <Link to="/user/validate-entry">Validate</Link>
             </li>
-            <li>
-              <Link to="/admin-dashboard/">Dashboard</Link>
-            </li>
             </>: null
             }
             {currentPath === "/" || currentPath === "/signin" || currentPath === "/signup"?
