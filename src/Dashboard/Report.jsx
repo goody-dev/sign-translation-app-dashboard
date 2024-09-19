@@ -20,7 +20,7 @@ const Report = () => {
 
   const handleFrameChange = (event) => {
     setTimeframe(event.target.value);
-    alert(event.target.value);
+    // alert(event.target.value);
   }
 
   const [signVideos, setSignVideos] = useState([]);
@@ -63,8 +63,8 @@ const Report = () => {
 
   ]
 
-  const topTextRating = signTexts[0]? signTexts.reduce((text, next) => text.rating < next.rating? next.rating: text.rating) : <span className='text-[1rem] text-[var(--xsubtext-color)]'>...</span>;
-  const topVideoRating = signVideos[0]? signVideos.reduce((video, next) => video.rating < next.rating? next.rating: video.rating): <span className='text-[1rem] text-[var(--xsubtext-color)]'>...</span>;
+  const topTextRating = signTexts[0]? signTexts.reduce((text, next) => text.rating < next.rating? next.rating: text.rating) : <span className='text-[1rem] text-[var(--xsubtext-color)]'>...</span> || "Null";
+  const topVideoRating = signVideos[0]? signVideos.reduce((video, next) => video.rating < next.rating? next.rating: video.rating): <span className='text-[1rem] text-[var(--xsubtext-color)]'>...</span> || "Null";
   const fetchActivityData = () => {
 
   }

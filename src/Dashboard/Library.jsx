@@ -18,55 +18,50 @@ const Library = () => {
 
   const handleTextOrderSelect = (event) => {
     setTextOrder(event.target.value);
-    alert(event.target.value);
+    orderItems("texts", event.target.value)
   }
 
   const handleVideoOrderSelect = (event) => {
     setVideoOrder(event.target.value);
-    alert(event.target.value);
+    orderItems("videos", event.target.value);
+  }
+
+  const orderItems = (items, order) => {
+    if (items === "videos") {
+      if (order === "recent") {
+        signVideos.sort((video, next) => next.id - video.id);
+      } else if (order === "early") {
+        signVideos.sort((video, next) => video.id - next.id);
+      }
+    } else if (items === "texts") {
+      if (order === "recent") {
+        signTexts.sort((text, next) => next.id - text.id);
+      } else if (order === "early") {
+        signTexts.sort((text, next) => text.id - next.id);
+      }
+    }
   }
 
 
   const [signVideos, setSignVideos] = useState([]);
-  let videos;
 
-  useEffect(()=> {
-    if(videoOrder === "recent"){
-      videos = signVideos.sort((video, next) => next.id - video.id);
-      setSignVideos(videos);
-    } else if (videoOrder === "early") {
-      videos = signVideos.sort((video, next) => video.id - next.id);
-      setSignVideos(videos);
-    }
-  }, [videoOrder, signVideos]);
 
   const fetchVideos = async()=> {
 
     await axios.get('https://signs-5n09.onrender.com/video/all', config)
     .then(res => {
       console.log(res.data.data);
-      setSignVideos(res.data.data);
+      setSignVideos(res.data.data.sort((video, next) => next.id - video.id));
     }).catch(err => console.log(err));
   }
 
   const [signTexts, setSignTexts] = useState([]);
-  let texts;
-
-  useEffect(()=> {
-    if(textOrder === "recent"){
-      texts = signTexts.sort((video, next) => next.id - video.id);
-      setSignTexts(texts);
-    } else if (textOrder === "early") {
-      texts = signTexts.sort((video, next) => video.id - next.id);
-      setSignTexts(texts);
-    }
-  }, [textOrder, signTexts]);
 
   const fetchTexts = async()=> {
     await axios.get('https://signs-5n09.onrender.com/text/all', config)
     .then(res => {
       console.log(res.data.data);
-      setSignTexts(res.data.data);
+      setSignTexts(res.data.data.sort((text, next) => next.id - text.id));
     }).catch(err => console.log(err));
   }
 
@@ -74,7 +69,6 @@ const Library = () => {
     fetchTexts();
     fetchVideos();
   }, [token])
-
 
   return (
     <div className='flex flex-row flex-wrap w-[85%] h-[100%] gap-[2rem]'>
