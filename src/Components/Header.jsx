@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react'
-import { Link, useLocation } from 'react-router-dom'
+import { Link, redirect, useLocation } from 'react-router-dom'
 import Logo from '../assets/icons/LOGO.png'
 import ArrowDown from '../assets/icons/arrow-down.png'
 import NaijaLogo from '../assets/icons/nigeria-icon.svg'
@@ -66,8 +66,10 @@ const Header = () => {
 
   const logout = () => {
     handleToken();
+    redirect("/signin");
   }
 
+  const authenticatedUsersPath = ["/reports", "/text-analytics:id", "/text-analytics:id", "/library", "/"]
 
 
   return (
@@ -81,26 +83,11 @@ const Header = () => {
             <li>
               <Link to="/about">About</Link>
             </li>
-            <li className='flex flex-col items-end md:block'>
-              <button onClick={handleContrClick} className='flex flex-row items-center gap-[calc(var(--inline-gap)/2)] md:leading-[1rem]'>Contribute<img src={ArrowDown} className={'w-[var(--vh-icon)] ' + (showContrMenu && 'rotate-[180deg]')} alt='arrow down icon'/></button>
-              {showContrMenu && <SubMenu menu={contributeMenu} />}
-            </li>
-            {token && token !== "initial"?
-              <>
-            <li className='flex flex-col items-end md:block'>
-              <button onClick={handleTranslateClick} className='flex flex-row items-center gap-[calc(var(--inline-gap)/2)] md:leading-[1rem]'>Translate<img src={ArrowDown} className={'w-[var(--vh-icon)] ' + (showTranslateMenu && 'rotate-[180deg]')} alt='arrow down icon'/></button>
-              {showTranslateMenu && <SubMenu menu={translateMenu} />}
-            </li>
             <li>
-              <Link to="/user/validate-entry">Validate</Link>
+              {token && token !== "initial"?<button onClick={logout}>Logout</button>:<Link to="/signin">Login</Link>}
             </li>
-            </>: null
-            }
-            {currentPath === "/" || currentPath === "/signin" || currentPath === "/signup"?
+            {currentPath === "/signin" || currentPath === "/signup"?
               <>
-                <li>
-                  {token && token !== "initial"?<button onClick={logout}>Logout</button>:<Link to="/signin">Login</Link>}
-                </li>
                 <li>
                   <Link to="/signup"><button className='bg-[var(--blue-background)] p-[var(--button-padding)] rounded-[0.5rem] text-[var(--tertiary-color)]'>Register</button></Link>
                 </li>
