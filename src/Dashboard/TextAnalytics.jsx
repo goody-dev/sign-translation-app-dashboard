@@ -70,7 +70,7 @@ const TextAnalytics = () =>  {
   return (
     <div className='flex flex-col gap-[var(--custom-gap)] max-w-[calc(100%-2rem)] md:h-[calc(100vh-97.19px)]'>
       <div className='grid grid-cols-2 gap-[var(--custom-gap)] items-center'>
-        <h1  className='col-span-1 font-bold text-[2rem] text-left'>Text Analytics</h1>
+        <h1 className='col-span-1 font-bold text-[2rem] text-left'>Text Analytics</h1>
         <SearchBar />
       </div>
       <div className='grid grid-cols-2 gap-[var(--custom-gap)] items-center '>

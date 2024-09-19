@@ -18,10 +18,12 @@ const Library = () => {
 
   const handleTextOrderSelect = (event) => {
     setTextOrder(event.target.value);
+    alert(event.target.value);
   }
 
   const handleVideoOrderSelect = (event) => {
     setVideoOrder(event.target.value);
+    alert(event.target.value);
   }
 
 
@@ -32,7 +34,7 @@ const Library = () => {
     if(videoOrder === "recent"){
       videos = signVideos.sort((video, next) => next.id - video.id);
       setSignVideos(videos);
-    } else {
+    } else if (videoOrder === "early") {
       videos = signVideos.sort((video, next) => video.id - next.id);
       setSignVideos(videos);
     }
@@ -54,7 +56,7 @@ const Library = () => {
     if(textOrder === "recent"){
       texts = signTexts.sort((video, next) => next.id - video.id);
       setSignTexts(texts);
-    } else {
+    } else if (textOrder === "early") {
       texts = signTexts.sort((video, next) => video.id - next.id);
       setSignTexts(texts);
     }
@@ -75,7 +77,7 @@ const Library = () => {
 
 
   return (
-    <div className='flex flex-row w-[85%] h-[100%] gap-[2rem]'>
+    <div className='flex flex-row flex-wrap w-[85%] h-[100%] gap-[2rem]'>
       <div className='flex flex-col w-[calc(50%-1rem)] gap-[1rem]'>
         <select onChange={handleVideoOrderSelect} value={videoOrder} disabled={signVideos[0]? false: true} name='videos' id='video-order-select' className='p-[var(--button-padding)] rounded-[1.25rem] w-[20rem] text-[1rem] text-[var(--subtext-color)] font-[500]'>
           <option value="recent">Sort by: Most Recent</option> 

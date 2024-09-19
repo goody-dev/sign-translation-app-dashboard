@@ -5,6 +5,14 @@ const SearchBar = () => {
 	const [searchInput, setSearchInput] = useState("");
   const selectedText = useState("");
 
+	const fetchData = async()=> {
+    await axios.get('https://signs-5n09.onrender.com/text/all', config)
+    .then(res => {
+      console.log(res.data.data);
+      setSignVideos(res.data.data);
+    }).catch(err => console.log(err));
+  }
+
 	const handleSearchInput = (event) => {
 		setSearchInput(event.target.value);
 	}

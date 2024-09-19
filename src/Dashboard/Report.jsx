@@ -20,6 +20,7 @@ const Report = () => {
 
   const handleFrameChange = (event) => {
     setTimeframe(event.target.value);
+    alert(event.target.value);
   }
 
   const [signVideos, setSignVideos] = useState([]);
@@ -62,6 +63,8 @@ const Report = () => {
 
   ]
 
+  const topTextRating = signTexts[0]? signTexts.reduce((text, next) => text.rating < next.rating? next.rating: text.rating) : <span className='text-[1rem] text-[var(--xsubtext-color)]'>...</span>;
+  const topVideoRating = signVideos[0]? signVideos.reduce((video, next) => video.rating < next.rating? next.rating: video.rating): <span className='text-[1rem] text-[var(--xsubtext-color)]'>...</span>;
   const fetchActivityData = () => {
 
   }
@@ -124,11 +127,11 @@ const Report = () => {
   return (
     <div className="flex flex-col gap-[var(--custom-gap)] h-[100%] w-[85%]">
       <div id="filter">
-        <select name="timeframe" value={timeframe} id="timeframe-select" className='p-[var(--button-padding)] rounded-[1.25rem] w-[20rem] text-[1rem] text-[var(--subtext-color)] font-normal border-[#EFF0F6] border-[1px] border-solid shadow-md '>
-          <option className='' value="all-time">Timeframe: <span className='font-semibold text-black'>All-time</span></option>
-          <option className='' value="weekly">Timeframe: <span className='font-semibold text-black'>Last One Week</span></option>
-          <option className='' value="monthly">Timeframe: <span className='font-semibold text-black'>Last One Month</span></option>
-          <option className='' value="yearly">Timeframe: <span className='font-semibold text-black'>Last One Year</span></option>
+        <select name="timeframe" onChange={handleFrameChange} value={timeframe} id="timeframe-select" aria-placeholder='Timeframe' className='p-[var(--button-padding)] rounded-[1.25rem] w-[20rem] text-[1rem] text-[var(--subtext-color)] font-normal border-[#EFF0F6] border-[1px] border-solid shadow-md '> 
+          <option className='' value="all-time"><span className='font-semibold text-black'>All-time</span></option>
+          <option className='' value="weekly"><span className='font-semibold text-black'>Last One Week</span></option>
+          <option className='' value="monthly"><span className='font-semibold text-black'>Last One Month</span></option>
+          <option className='' value="yearly"><span className='font-semibold text-black'>Last One Year</span></option>
         </select>
       </div>
       <div className="flex flex-row flex-wrap w-[100%] gap-[1.5rem]">
@@ -150,8 +153,8 @@ const Report = () => {
               </div>
             </div>
             <div className="flex flex-row gap-[1rem] w-[100%] h-max">
-                <AreaChartCard title="Top Text Rating" figure="64%" data={ttrData} />
-                <AreaChartCard title="Top Video Rating" figure="86%" data={ttrData} />
+                <AreaChartCard title="Top Text Rating" figure={topTextRating} data={ttrData} />
+                <AreaChartCard title="Top Video Rating" figure={topVideoRating} data={ttrData} />
                 <AreaChartCard title="Contributions" figure="+34%" data={ttrData} />
             </div>
         </div>
