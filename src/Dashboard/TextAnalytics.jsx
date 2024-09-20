@@ -79,10 +79,6 @@ const TextAnalytics = () =>  {
         </div>
         <Gallery selectedTextId={selectedTextId} translations={selectedTextTranslation.videoUrls && selectedTextTranslation.videoUrls}/>
       </div>
-      <div className='flex flex-row w-[100%] justify-between'>
-        <button className={'bg-[var(--blue-background)] p-[var(--button-padding)] rounded-[0.5rem] text-[var(--tertiary-color)] font-semibold shadow-[var(--button-shadow)] gap-[var(--inline-gap)] sm:p-[var(--button-padding)] opacity-[0.3]'}><img className='rotate-180 h-[var(vh-icon)]' src={ArrowIcon}/>Previous</button>
-        <button className='bg-[var(--blue-background)] p-[var(--button-padding)] rounded-[0.5rem] text-[var(--tertiary-color)] font-semibold shadow-[var(--button-shadow)] gap-[var(--inline-gap)] sm:p-[var(--button-padding)]'>Submit <img className='h-[var(vh-icon)]' src={ArrowIcon} /></button>
-      </div>
     </div>
   )
 }

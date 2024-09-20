@@ -18,8 +18,8 @@ const SearchBar = () => {
 	}
 
   return (
-		<div className='col-span-1 flex flex-row bg-[var(--input-color)] rounded-[0.25rem] px-[0.5rem] py-[0.25rem] gap-[var(--custom-gap)]' >
-			<img src={SearchIcon} />
+		<div className='col-span-1 h-[36px] flex flex-row items-center bg-[var(--searchbar-background)] rounded-[0.375rem] px-[0.5rem] py-[0.25rem] gap-[var(--custom-gap)]' >
+			<img src={SearchIcon} className="h-[12px] w-[12px]" />
 			<input onChange={(event) => handleSearchInput(event)} className='focus:outline-none w-[100%] bg-transparent focus:border-none' placeholder='Find a text' value={searchInput}>
 			</input>
 		</div>

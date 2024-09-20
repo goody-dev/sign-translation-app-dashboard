@@ -16,6 +16,7 @@ import AdminRoute from "./admin-route"
 import Report from "../Dashboard/Report"
 import Library from "../Dashboard/Library"
 import TextAnalytics from "../Dashboard/TextAnalytics"
+import VideoAnalytics from "../Dashboard/VideoAnalytics"
 
 const routesForAuthenticatedUsers = [
     {
@@ -35,8 +36,8 @@ const routesForAuthenticatedUsers = [
                 path: "/library"
             },
             {
-                element: <TextAnalytics />,
-                path: "/text-analytics"
+                element: <VideoAnalytics />,
+                path: "/video-analytics/:id"
             },
             {
                 element: <TextAnalytics />,

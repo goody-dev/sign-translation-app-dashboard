@@ -1,38 +1,49 @@
+import React, { useEffect, useRef, useState } from 'react'
+import PlayIcon from '../assets/icons/play-circle.svg'
+import StopIcon from '../assets/icons/stop-circle.svg'
+import ArrowIcon from '../assets/icons/filled-arrow-right.png'
+import ArrowDown from '../assets/icons/filled-arrow-down.png'
 
+const VideoPlayer = ({videoUrl}) => {
+  const [playing, setPlaying] = useState([false]);
+  useEffect(() => {
+    if(videoUrl) {
+      //console.log(signVideos[videoIndex].videoUrl);
+      playerRef.current.src = videoUrl;
+      playing && playerRef.current.pause();
+    }
+  }, [videoUrl]);
 
-import React, { useRef } from 'react'
-
-const VideoPlayer = () => {
-
-  const videoRef = useRef();
+  const playerRef = useRef();
 
   const handlePlay = () => {
-
+    playerRef.current.play();
+    setPlaying(true);
   }
   const handlePause = () => {
-
+    playerRef.current.pause();
+    setPlaying(false);
   }
 
 
   return (
-    <div className='flex flex-col justify-end items-end h-[50vh] w-[100%] sm:w-[100%] bg-[var(--black-background)]'>
-    {/* <div className='block absolute mb-[50vh] mr-[4.5%]'>
-      <div className='flex flex-row absolute items-center justify-center bg-[var(--white-background)] p-[var(--button-padding)] mt-0'>
-        <p>ASL</p>
-        <img src={ArrowDown}/>
+  <div className='flex flex-col justify-end items-end h-[50vh] w-[100%] sm:w-[100%] bg-[var(--black-background)]'>
+    {/* <div className='absolute self-end mb-[50vh] mr-[60px]'>
+      <div className='absolute flex flex-row items-center justify-center bg-[var(--white-background)] p-[var(--button-padding)]'> 
+      <p>ASL</p>
+      <img src={ArrowDown}/>
       </div>
     </div> */}
-      <video ref={videoRef} controls className='h-[100%] w-[100%]'>
-        <source src="" />
-      </video>
-      <div className='absolute flex flex-row self-center gap-[var(--custom-gap)] mb-[calc(2*var(--custom-gap))]'>
-        <button onClick={handlePlay}>
-          <img src={PlayIcon} className='cursor-pointer'/>
-        </button>
-        <button onClick={handlePause}>
-          <img src={StopIcon} className='cursor-pointer'/>
-        </button>
-      </div>
+    <video id='video-player' ref={playerRef} aria-label='view box' aria-description='Displays video to be translated' className='h-[100%] w-[100%]'>
+    </video>
+    <div aria-controls='video-player' className='absolute flex flex-row self-center gap-[var(--custom-gap)] mb-[calc(2*var(--custom-gap))]'>
+      <button onClick={handlePlay} aria-description='play video'>
+        <img src={PlayIcon} className='cursor-pointer' alt='play icon'/>
+      </button>
+      <button onClick={handlePause} aria-description='pause video'>
+        <img src={StopIcon} className='cursor-pointer' alt='stop icon'/>
+      </button>
+    </div>
   </div>
   )
 }

@@ -90,12 +90,14 @@ const Library = () => {
                 { signVideos[0]?
                   signVideos.map((translation, idx) => 
                   <>
-                    <div key={idx} className='flex flex-row justify-between'>
-                      <p className='w-[25%] text-[var(--secondary-color)] cursor-pointer'>{translation.id}</p>
-                      <p className='w-[25%]'>{translation.texts? `${translation.texts.length} translations` : "0 Translation"}</p>
-                      <p className='w-[25%] text-center'>{translation.texts? `${translation.texts.length} Contributions` : "0 Contibutions"}</p>
-                      <p className='w-[25%] text-center'>{translation.texts.reduce((highest, text)=> text.rating > highest.rating? text: highest).rating}</p>
-                    </div>
+                    <a key={idx} href={`/video-analytics/${translation.id}`}>
+                      <div className='flex flex-row justify-between'>
+                        <p className='w-[25%] text-[var(--secondary-color)] cursor-pointer'>{translation.id}</p>
+                        <p className='w-[25%]'>{translation.texts? `${translation.texts.length} translations` : "0 Translation"}</p>
+                        <p className='w-[25%] text-center'>{translation.texts? `${translation.texts.length} Contributions` : "0 Contibutions"}</p>
+                        <p className='w-[25%] text-center'>{translation.texts.reduce((highest, text)=> text.rating > highest.rating? text: highest).rating}</p>
+                      </div>
+                    </a>
                     <hr></hr>
                   </>)
                   : "Loading Translations..."}
