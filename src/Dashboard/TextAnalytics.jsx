@@ -31,51 +31,30 @@ const TextAnalytics = () =>  {
     }).catch(err => console.log(err));
   }
 
+  const [searchData, setSearchData] = useState([]);
+
+	const fetchData = async()=> {
+    await axios.get('https://signs-5n09.onrender.com/text/all', config)
+    .then(res => {
+      console.log(res.data.data);
+      setSearchData(res.data.data);
+    }).catch(err => console.log(err));
+  }
+
   useEffect(()=>{
     fetchTextTranslation();
+    fetchData();
   }, [])
-
-  const textSVideos = [
-    {
-      thumbnail: "#",
-      rating: 77,
-    },
-    {
-      thumbnail: "#",
-      rating: 77,
-    },
-    {
-      thumbnail: "#",
-      rating: 87,
-    },
-    {
-      thumbnail: "#",
-      rating: 79,
-    },
-    ,
-    {
-      thumbnail: "#",
-      rating: 79,
-    },
-    {
-      thumbnail: "#",
-      rating: 79,
-    },
-    {
-      thumbnail: "#",
-      rating: 79,
-    }
-  ]
 
   return (
     <div className='flex flex-col gap-[var(--custom-gap)] max-w-[calc(100%-2rem)] md:h-[calc(100vh-97.19px)]'>
       <div className='grid grid-cols-2 gap-[var(--custom-gap)] items-center'>
         <h1 className='col-span-1 font-bold text-[2rem] text-left'>Text Analytics</h1>
-        <SearchBar />
+        <SearchBar searchData={searchData[0]? searchData: null} />
       </div>
       <div className='grid grid-cols-2 gap-[var(--custom-gap)] items-center '>
         <div className='col-span-1 flex flex-col items-center justify-center p-[var(--button-padding)] bg-[var(--white-background)] h-[50vh] w-[100%] min-w-[41.5vw] sm:w-[100%]'>
-            <p className='text-center text-[20px] font-semibold text-wrap'>{selectedTextTranslation.text? selectedTextTranslation.text: "Loading..."}</p>
+          <p className='text-center text-[20px] font-semibold text-wrap'>{selectedTextTranslation.text? selectedTextTranslation.text: "Loading..."}</p>
         </div>
         <Gallery selectedTextId={selectedTextId} translations={selectedTextTranslation.videoUrls && selectedTextTranslation.videoUrls}/>
       </div>

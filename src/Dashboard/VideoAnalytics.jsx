@@ -33,8 +33,19 @@ const VideoAnalytics = () =>  {
     }).catch(err => console.log(err));
   }
 
+  const [searchData, setSearchData] = useState([]);
+
+	const fetchData = async()=> {
+    await axios.get('https://signs-5n09.onrender.com/video/all', config)
+    .then(res => {
+      console.log(res.data.data);
+      setSearchData(res.data.data);
+    }).catch(err => console.log(err));
+  }
+
   useEffect(()=>{
     fetchVideoTranscript();
+    fetchData();
   }, [])
 
 
@@ -42,7 +53,7 @@ const VideoAnalytics = () =>  {
     <div className='flex flex-col gap-[var(--custom-gap)] max-w-[calc(100%-2rem)] md:h-[calc(100vh-97.19px)]'>
       <div className='grid grid-cols-2 gap-[var(--custom-gap)] items-center'>
         <h1 className='col-span-1 font-bold text-[2rem] text-left'>Video Analytics</h1>
-        <SearchBar />
+        <SearchBar searchData={searchData}/>
       </div>
       <div className='grid grid-cols-2 gap-[var(--custom-gap)] items-center '>
         <div className='col-span-1 flex flex-col items-center justify-center h-[50vh] w-[100%] min-w-[41.5vw] sm:w-[100%]'>
