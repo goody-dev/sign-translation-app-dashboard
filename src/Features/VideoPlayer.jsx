@@ -36,7 +36,7 @@ const VideoPlayer = ({videoUrl}) => {
     </div> */}
     <video id='video-player' ref={playerRef} aria-label='view box' aria-description='Displays video to be translated' className='h-[100%] w-[100%]'>
     </video>
-    <div aria-controls='video-player' className='absolute flex flex-row self-center gap-[var(--custom-gap)] mb-[calc(2*var(--custom-gap))]'>
+    <div aria-controls='video-player' className='absolute flex flex-row self-center p-[var(--button-padding)] rounded-[var(--button-radius)] gap-[var(--custom-gap)] mb-[calc(2*var(--custom-gap))] bg-[var(--white-background)]'>
       <button onClick={handlePlay} aria-description='play video'>
         <img src={PlayIcon} className='cursor-pointer h-[40px]' alt='play icon'/>
       </button>
