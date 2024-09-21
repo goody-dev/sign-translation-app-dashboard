@@ -1,8 +1,8 @@
 import React, { useEffect, useRef, useState } from 'react'
 import UploadIcon from '../assets/icons/send-square.svg'
-import PlayIcon from '../assets/icons/play-circle.svg'
-import StopIcon from '../assets/icons/stop-circle.svg'
-import RecordIcon from '../assets/icons/record-circle.svg'
+import PlayIcon from '../assets/icons/icons8-play-white.png'
+import StopIcon from '../assets/icons/icons8-pause-white.png'
+import RecordIcon from '../assets/icons/icons8-record-white.png'
 import axios from 'axios'
 
 import { useAuth } from '../provider/authProvider'

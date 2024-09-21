@@ -1,6 +1,6 @@
 import React, { useEffect, useRef, useState } from 'react'
-import PlayIcon from '../assets/icons/play-circle.svg'
-import StopIcon from '../assets/icons/stop-circle.svg'
+import PlayIcon from '../assets/icons/icons8-play-button.png'
+import StopIcon from '../assets/icons/icons8-pause-button.png'
 import ArrowIcon from '../assets/icons/filled-arrow-right.png'
 import ArrowDown from '../assets/icons/filled-arrow-down.png'
 
@@ -38,10 +38,10 @@ const VideoPlayer = ({videoUrl}) => {
     </video>
     <div aria-controls='video-player' className='absolute flex flex-row self-center gap-[var(--custom-gap)] mb-[calc(2*var(--custom-gap))]'>
       <button onClick={handlePlay} aria-description='play video'>
-        <img src={PlayIcon} className='cursor-pointer' alt='play icon'/>
+        <img src={PlayIcon} className='cursor-pointer h-[40px]' alt='play icon'/>
       </button>
       <button onClick={handlePause} aria-description='pause video'>
-        <img src={StopIcon} className='cursor-pointer' alt='stop icon'/>
+        <img src={StopIcon} className='cursor-pointer h-[40px]' alt='stop icon'/>
       </button>
     </div>
   </div>
