@@ -4,20 +4,9 @@ import { Link } from 'react-router-dom';
 const SearchList = ({items, search}) => {
   const [list, setList] = useState([]);
 
-  // const filterBySearch = () => {
-  //   const newList = list.filter(item => searchInput in item.videoUrl || searchInput in item.text);
-  //   setList(newList);
-  //   console.log(newList);
-  // }
-
-  useEffect(()=>{
-    setList(items);
-    console.log(items);
+  useEffect(()=> {
+    items? setList(items): null;
   }, [])
-
-  useEffect(()=>{
-    console.log(search);
-  }, [search])
 
   return (
     <div className='z-50 absolute top-[48px] bg-[var(--white-background)] flex flex-col h-fit max-h-[20rem] w-[100%] overflow-y-auto overflow-x-hidden shadow-sm'>

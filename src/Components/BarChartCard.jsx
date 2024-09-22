@@ -4,7 +4,7 @@ import React from 'react'
 
 const BarChartCard = ({title, data}) => {
   return (
-    <div id="activity" className="flex flex-col justify-between items-start w-[calc(50%-1rem)] h-[auto] max-h-[537px] bg-[var(--white-background)] shadow-md p-[var(--tile-padding)] rounded-[1rem] border-[#EFF0F6] border-[1px] border-solid">
+    <div id="activity" className="flex flex-col justify-between items-start w-[100%] md:w-[calc(50%-1rem)] md:min-w-[375px] h-[auto] max-h-[537px] bg-[var(--white-background)] shadow-md p-[var(--tile-padding)] rounded-[1rem] border-[#EFF0F6] border-[1px] border-solid">
       <p  className='text-[14px] text-[var(--subtext-color)] font-[500]'>{title}</p>
       <ResponsiveContainer width="100%" height={240} background={{ fill: "#FF00F3" }}>
         <BarChart data={data} barSize={10}>

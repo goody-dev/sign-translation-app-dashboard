@@ -50,13 +50,13 @@ const VideoAnalytics = () =>  {
 
 
   return (
-    <div className='flex flex-col gap-[var(--custom-gap)] max-w-[calc(100%-2rem)] md:h-[calc(100vh-97.19px)]'>
-      <div className='grid grid-cols-2 gap-[var(--custom-gap)] items-center'>
-        <h1 className='col-span-1 font-bold text-[2rem] text-left'>Video Analytics</h1>
+    <div className='flex flex-col gap-[var(--custom-gap)] md:max-w-[calc(100%-2rem)] md:h-[calc(100vh-97.19px)]'>
+      <div className='flex flex-col items-start w-[100%] md:grid md:grid-cols-2 gap-[var(--custom-gap)]'>
+        <h1 className='md:col-span-1 font-bold text-[2rem] text-left'>Video Analytics</h1>
         <SearchBar searchData={searchData}/>
       </div>
-      <div className='grid grid-cols-2 gap-[var(--custom-gap)] items-center '>
-        <div className='col-span-1 flex flex-col items-center justify-center h-[50vh] w-[100%] min-w-[41.5vw] sm:w-[100%]'>
+      <div className='flex flex-col w-[100%] md:grid md:grid-cols-2 gap-[var(--custom-gap)]'>
+        <div className='md:col-span-1 flex flex-col items-center justify-center h-[50vh] w-[100%]'>
           <VideoPlayer videoUrl={selectedVideoTranscript.videoUrl} />
         </div>
         <Transcripts selectedVideoId={selectedVideoId} transcripts={selectedVideoTranscript.texts && selectedVideoTranscript.texts}/>

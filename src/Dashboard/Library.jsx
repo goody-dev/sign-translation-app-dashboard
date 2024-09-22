@@ -71,9 +71,9 @@ const Library = () => {
   }, [token])
 
   return (
-    <div className='flex flex-row flex-wrap w-[85%] h-[100%] gap-[2rem]'>
-      <div className='flex flex-col w-[calc(50%-1rem)] gap-[1rem]'>
-        <select onChange={handleVideoOrderSelect} value={videoOrder} disabled={signVideos[0]? false: true} name='videos' id='video-order-select' className='p-[var(--button-padding)] rounded-[1.25rem] w-[20rem] text-[1rem] text-[var(--subtext-color)] font-[500]'>
+    <div className='flex flex-row flex-wrap lg:grid lg:grid-cols-2 w-[85%] h-[100%] gap-[2rem]'>
+      <div className='flex flex-col lg:col-span-1 w-[100%] gap-[1rem] min-w-[100%]'>
+        <select onChange={handleVideoOrderSelect} value={videoOrder} disabled={signVideos[0]? false: true} name='videos' id='video-order-select' className='p-[var(--button-padding)] rounded-[1.25rem] w-[100%] sm:w-[20rem] text-[1rem] text-[var(--subtext-color)] font-[500]'>
           <option value="recent">Sort by: Most Recent</option> 
           <option value="early">Sort by: Most Early</option>
         </select>
@@ -105,8 +105,8 @@ const Library = () => {
             </div>
         </div>
       </div>
-      <div className='flex flex-col w-[calc(50%-1rem)] gap-[1rem]'>
-        <select onChange={handleTextOrderSelect} value={textOrder} disabled={signTexts[0]? false: true} name="texts" id="texts-order-select" className='p-[var(--button-padding)] rounded-[1.25rem] w-[20rem] text-[1rem] text-[var(--subtext-color)] font-[500]'>
+      <div className='flex flex-col lg:col-span-1 w-[100%] gap-[1rem] min-w-[100%]'>
+        <select onChange={handleTextOrderSelect} value={textOrder} disabled={signTexts[0]? false: true} name="texts" id="texts-order-select" className='p-[var(--button-padding)] rounded-[1.25rem] w-[100%] sm:w-[20rem] text-[1rem] text-[var(--subtext-color)] font-[500]'>
             <option value="recent">Sort by: Most Recent</option>
             <option value="early">Sort by: Most Early</option>
         </select>
