@@ -88,22 +88,22 @@ const Library = () => {
         <div className='flex flex-col bg-[var(--white-background)] p-[calc(var(--card-padding)/2)] sm:p-[var(--card-padding)] rounded-[1rem] gap-[var(--custom-gap)]'>
             <h2 className='text-[var(--subtext-color)] font-[500]'>Video to Text Translations</h2>
             <div className='flex flex-col text-[0.8rem] gap-[calc(var(--custom-gap)/2)]'>
-              <div className='flex flex-col items-start sm:flex-row sm:items-center sm:justify-between bg-[var(--faint-blue-background)] p-[var(--button-padding)] rounded-[0.5rem] text-[var(--xsubtext-color)] font-[500]'>
-                <p className='w-[25%] text-nowrap'>video ID</p>     
-                <p className='w-[25%] text-nowrap'>Translations</p>     
-                <p className='w-[25%] text-nowrap sm:text-center'>Contributions</p>     
-                <p className='w-[25%] text-nowrap sm:text-right'>Top Rating</p>
+              <div className='flex flex-row justify-between bg-[var(--faint-blue-background)] p-[var(--button-padding)] rounded-[0.5rem] text-[var(--xsubtext-color)] font-[500]'>
+                <p className='w-[25%] text-wrap break-words text-center sm:text-left'>video ID</p>     
+                <p className='w-[25%] text-wrap break-words text-center sm:text-left'>Translations</p>     
+                <p className='w-[25%] text-wrap break-words text-center sm:text-center'>Contributions</p>     
+                <p className='w-[25%] text-wrap break-words text-center sm:text-right'>Top Rating</p>
               </div>
               <div className='flex flex-col gap-[calc(var(--custom-gap)/2)]'>
                 { videosStatus? videosStatus: signVideos[0]?
                   signVideos.map((translation, idx) => 
                   <>
                     <a key={idx} href={`/video-analytics/${translation.id}`}>
-                      <div className='flex flex-col items-start sm:flex-row sm:items-center sm:justify-between'>
-                        <p className='w-[25%] text-nowrap text-left sm:text-left text-[var(--secondary-color)] cursor-pointer'>{translation.id}</p>
-                        <p className='w-[25%] text-nowrap text-left sm:text-left'>{translation.texts? `${translation.texts.length} translations` : "0 Translation"}</p>
-                        <p className='w-[25%] text-nowrap text-left sm:text-center'>{translation.texts? `${translation.texts.length} Contributions` : "0 Contibutions"}</p>
-                        <p className='w-[25%] text-nowrap text left sm:text-center'>{translation?.texts.reduce((highest, text)=> text.rating > highest.rating? text: highest).rating || "Null"}</p>
+                      <div className='flex flex-row justify-between'>
+                        <p className='w-[25%] text-center sm:text-left text-[var(--secondary-color)] cursor-pointer'>{translation.id}</p>
+                        <p className='w-[25%] text-center sm:text-left'>{translation.texts? `${translation.texts.length}` : "0"} <span className='hidden :sm:flex'>Translations</span></p>
+                        <p className='w-[25%] text-center sm:text-center'>{translation.texts? `${translation.texts.length}` : "0"} <span className='hidden :sm:flex'>Contributions</span></p>
+                        <p className='w-[25%] text center sm:text-center'>{translation?.texts.reduce((highest, text)=> text.rating > highest.rating? text: highest).rating || "Null"}</p>
                       </div>
                     </a>
                     <hr></hr>
