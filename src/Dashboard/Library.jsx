@@ -44,13 +44,13 @@ const Library = () => {
 
 
   const [signVideos, setSignVideos] = useState([]);
-  const [videosStatus, setVideoStatus] = useState("Loading")
+  const [videosStatus, setVideoStatus] = useState("Loading translations")
 
   const fetchVideos = async()=> {
     await axios.get('https://signs-5n09.onrender.com/video/all', config)
     .then(res => {
       console.log(res.data.data);
-      setVideoStatus("wait...")
+      setVideoStatus(null)
       setSignVideos(res.data.data.sort((video, next) => next.id - video.id));
     }).catch(err => {
       console.log(err);
@@ -65,7 +65,7 @@ const Library = () => {
     await axios.get('https://signs-5n09.onrender.com/text/all', config)
     .then(res => {
       console.log(res.data.data);
-      setTextsStatus("wait...")
+      setTextsStatus(null);
       setSignTexts(res.data.data.sort((text, next) => next.id - text.id));
     }).catch(err => {
       console.log(err);
@@ -95,7 +95,7 @@ const Library = () => {
                 <p className='w-[25%] text-right'>Top Rating</p>
               </div>
               <div className='flex flex-col gap-[calc(var(--custom-gap)/2)]'>
-                { signVideos[0]?
+                { videosStatus? videosStatus: signVideos[0]?
                   signVideos.map((translation, idx) => 
                   <>
                     <a key={idx} href={`/video-analytics/${translation.id}`}>
@@ -128,7 +128,7 @@ const Library = () => {
                 <p className='w-[25%] text-right'>Top Rating</p>
               </div>
               <div className='flex flex-col gap-[calc(var(--custom-gap)/2)]'>
-                { signTexts[0]?
+                { textsStatus? textsStatus: signTexts[0]?
                   signTexts.map((translation, idx) => 
                   <>
                     <a key={idx} href={`/text-analytics/${translation.id}`}>
