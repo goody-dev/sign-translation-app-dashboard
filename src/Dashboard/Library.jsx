@@ -44,25 +44,33 @@ const Library = () => {
 
 
   const [signVideos, setSignVideos] = useState([]);
-
+  const [videosStatus, setVideoStatus] = useState("Loading")
 
   const fetchVideos = async()=> {
-
     await axios.get('https://signs-5n09.onrender.com/video/all', config)
     .then(res => {
       console.log(res.data.data);
+      setVideoStatus("wait...")
       setSignVideos(res.data.data.sort((video, next) => next.id - video.id));
-    }).catch(err => console.log(err));
+    }).catch(err => {
+      console.log(err);
+      setVideoStatus("No video translations, check again later!");
+    });
   }
 
   const [signTexts, setSignTexts] = useState([]);
+  const [textsStatus, setTextsStatus] = useState("Loading translations...");
 
   const fetchTexts = async()=> {
     await axios.get('https://signs-5n09.onrender.com/text/all', config)
     .then(res => {
       console.log(res.data.data);
+      setTextsStatus("wait...")
       setSignTexts(res.data.data.sort((text, next) => next.id - text.id));
-    }).catch(err => console.log(err));
+    }).catch(err => {
+      console.log(err);
+      setTextsStatus("No text translations, check again later!")
+    });
   }
 
   useEffect(()=> {
@@ -95,12 +103,12 @@ const Library = () => {
                         <p className='w-[25%] text-[var(--secondary-color)] cursor-pointer'>{translation.id}</p>
                         <p className='w-[25%]'>{translation.texts? `${translation.texts.length} translations` : "0 Translation"}</p>
                         <p className='w-[25%] text-center'>{translation.texts? `${translation.texts.length} Contributions` : "0 Contibutions"}</p>
-                        <p className='w-[25%] text-center'>{translation.texts?.reduce((highest, text)=> text.rating > highest.rating? text: highest).rating}</p>
+                        <p className='w-[25%] text-center'>{translation?.texts.reduce((highest, text)=> text.rating > highest.rating? text: highest).rating || "Null"}</p>
                       </div>
                     </a>
                     <hr></hr>
                   </>)
-                  : "Loading Translations..."}
+                  : videosStatus}
               </div>
             </div>
         </div>
@@ -128,12 +136,12 @@ const Library = () => {
                         <p className='w-[25%] text-[var(--secondary-color)] cursor-pointer'>{translation.id}</p>
                         <p className='w-[25%]'>{translation.videoUrls? `${translation.videoUrls.length} translations`: "0 translations"}</p>
                         <p className='w-[25%] text-center'>{translation.videoUrls? `${translation.videoUrls.length} Contributions`: "0 Contribution"}</p>
-                        <p className='w-[25%] text-center'>{translation.videoUrls.length? translation.videoUrls?.reduce((top, video)=> video.rating > top.rating? video: top).rating :"Null"}</p>
+                        <p className='w-[25%] text-center'>{translation.videoUrls?.reduce((top, video)=> video.rating > top.rating? video: top).rating || "Null"}</p>
                       </div>
                     </a>
                     <hr></hr>
                   </>)
-                : "Loading Translations..." }
+                : textsStatus }
               </div>
             </div>
         </div>
